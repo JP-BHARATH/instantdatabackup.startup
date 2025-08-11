@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - InstantBackup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --dark-blue: #1e40af;
+            --light-blue: #eff6ff;
+            --white: #ffffff;
+            --glass-white: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --danger-red: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .main-header {
+            background: rgba(0,0,0,0.2);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .user-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info {
+            color: var(--white);
+            font-weight: 500;
+        }
+
+        .dashboard-button, #logout-button {
+            background: var(--glass-white);
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--glass-border);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .dashboard-button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Main Content */
+        .dashboard-content {
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glass Card Styles */
+        .glass-card {
+            background: var(--glass-white);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        h1, h2 {
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background-color: var(--white);
+            color: var(--primary-blue);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--light-blue);
+        }
+
+        .btn-danger {
+            background-color: var(--danger-red);
+            color: var(--white);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            color: var(--white);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--white);
+            background: rgba(255,255,255,0.2);
+        }
+
+        .form-control::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .form-control[readonly] {
+            background: rgba(255,255,255,0.05);
+            opacity: 0.8;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Activity List */
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-text {
+            color: var(--white);
+        }
+
+        .activity-time {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+        }
+
+        /* Data Usage */
+        .data-usage-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .data-usage-container {
+                flex-direction: row;
+            }
+        }
+
+        .chart-container {
+            position: relative;
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+        }
+
+        .chart-percentage {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    .chart-percentage span {
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--white);
+    }
+
+    .chart-percentage p {
+        color: rgba(255,255,255,0.8);
+        margin-top: 5px;
+    }
+
+    .recent-activity h3 {
+        color: var(--white);
+        margin-bottom: 15px;
+    }
+
+        .usage-details {
+            flex: 2;
+        }
+
+        .usage-progress {
+            margin-bottom: 20px;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: var(--white);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--white);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Footer */
+        .main-footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255,255,255,0.7);
+            margin-top: 30px;
+            font-size: 14px;
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .footer-nav a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .feedback-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 4px solid var(--primary-blue);
+}
+
+.feedback-item h4 {
+    color: var(--white);
+    margin-bottom: 10px;
+}
+
+.feedback-item p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 10px;
+}
+
+.feedback-meta {
+    display: flex;
+    justify-content: space-between;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.admin-response {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    border-left: 3px solid #4CAF50;
+}
+
+.admin-response strong {
+    color: var(--white);
+}
+
+.error-message {
+    color: #ff4444;
+    padding: 10px;
+    background: rgba(255, 0, 0, 0.1);
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.success-message {
+    color: #4CAF50;
+    padding: 10px;
+    background: rgba(76, 175, 80, 0.1);
+    border-radius: 5px;
+    margin: 10px 0;
+}
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">InstantBackup</div>
+        <nav class="user-nav">
+            
+            <a href="dashboard.html" class="dashboard-button">
+                <i class="fas fa-folder-open"></i>
+                <span>Dashboard</span>
+            </a>
+        </nav>
+    </header>
+
+    <main class="dashboard-content">
+        <h1>Profile</h1>
+
+        <!-- Profile Information Section -->
+        <section class="glass-card">
+            <h2>Profile Information</h2>
+            <form id="profile-form">
+                <div class="form-group">
+                    <label for="profile-name" class="form-label">Name</label>
+                    <input type="text" id="profile-name" name="name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="profile-email" class="form-label">Email</label>
+                    <input type="email" id="profile-email" name="email" class="form-control" readonly>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i>
+                    <span>Save Changes</span>
+                </button>
+            </form>
+        </section>
+
+        <!-- Password Update Section -->
+        <section class="glass-card">
+            <h2>Password Update</h2>
+            <form id="password-form">
+                <div class="form-group">
+                    <label for="current-password" class="form-label">Current Password</label>
+                    <input type="password" id="current-password" name="currentPassword" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-password" class="form-label">New Password</label>
+                    <input type="password" id="new-password" name="newPassword" class="form-control" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password" class="form-label">Confirm New Password</label>
+                    <input type="password" id="confirm-password" name="confirmPassword" class="form-control" required minlength="6">
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-key"></i>
+                    <span>Update Password</span>
+                </button>
+            </form>
+        </section>
+
+        <!-- Data Usage Section -->
+        <section class="glass-card">
+            <h2>Data Usage</h2>
+            <div class="data-usage-container">
+                <div class="chart-container">
+                    <canvas id="dataUsageChart"></canvas>
+                    <div class="chart-percentage">
+                        <span id="data-usage-percentage">0%</span>
+                        <p>used</p>
+                    </div>
+                </div>
+                <div class="usage-details">
+                    <div class="usage-progress">
+                        <div class="progress-text">
+                            <span>Storage Used</span>
+                            <span id="data-usage-text">0 MB / 1024 MB</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div id="data-usage-bar" class="progress-fill"></div>
+                        </div>
+                    </div>
+                    <div class="recent-activity">
+                        <h3>Recent Activity</h3>
+                        <ul id="recent-activity-list" class="activity-list">
+                            <!-- Activity items will be added here dynamically -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+
+        <!-- Feedback Section -->
+        <section class="glass-card">
+            <h2>Feedback</h2>
+            <p style="color: var(--white); margin-bottom: 20px;">Have feedback or encountered a bug? Let us know!</p>
+            <form id="feedback-form">
+                <div class="form-group">
+                    <label for="feedback-subject" class="form-label">Subject</label>
+                    <input type="text" id="feedback-subject" name="subject" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="feedback-description" class="form-label">Description</label>
+                    <textarea id="feedback-description" name="description" class="form-control" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Submit Feedback</span>
+                </button>
+            </form>
+        </section>
+
+        <section class="glass-card">
+    <h2>Your Feedback Submissions</h2>
+    <div id="feedback-list">
+        <!-- Feedback items will be loaded here -->
+    </div>
+</section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 InstantBackup. All rights reserved.</p>
+            <nav class="footer-nav">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Us</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script src="js/profile.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the chart
+            const ctx = document.getElementById('dataUsageChart').getContext('2d');
+            const dataUsageChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [0, 100], // Initial values (0% used)
+                        backgroundColor: [
+                            '#ffffff', // Used space (white)
+                            'rgba(255, 255, 255, 0.1)' // Remaining space (transparent white)
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    cutout: '75%',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: false
+                        }
+                    }
+                }
+            });
+    
+            // Function to update the chart and progress bar
+            function updateDataUsage(used, total) {
+                const percentage = Math.round((used / total) * 100);
+                
+                // Update chart
+                dataUsageChart.data.datasets[0].data = [percentage, 100 - percentage];
+                dataUsageChart.update();
+                
+                // Update percentage text
+                document.getElementById('data-usage-percentage').textContent = `${percentage}%`;
+                
+                // Update progress bar
+                document.getElementById('data-usage-bar').style.width = `${percentage}%`;
+                document.getElementById('data-usage-text').textContent = 
+                    `${used} MB / ${total} MB`;
+            }
+    
+            // Example usage (replace with your actual data)
+            // updateDataUsage(350, 1024); // 350MB used of 1024MB
+        });
+    </script>
+    
+</body>
+</html>

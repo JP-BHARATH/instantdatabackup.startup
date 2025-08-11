@@ -1,0 +1,1 @@
+{"message":"File is marked as deleted on the blockchain and cannot be restored."}

@@ -1,0 +1,103 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Tracker - Admin Panel</title>
+    <link rel="stylesheet" href="css/admin_styles.css">
+</head>
+<body class="admin-dashboard-page">
+    <header class="admin-header">
+        <div class="container">
+            <h1>Issue Tracker</h1>
+            <nav class="admin-nav">
+                <a href="user_monitoring.html" class="nav-item">Users</a>
+                <a href="issue_tracker.html" class="nav-item active">Issue Tracker</a>
+                <button id="admin-logout-button" class="btn btn-outline">Logout</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container admin-content">
+        <section class="card issue-list-section">
+            <h2>All Reported Issues (<span id="issue-count">0</span>)</h2>
+            <div class="filters">
+                <div class="form-group">
+                    <label for="status-filter" class="sr-only">Filter by Status</label>
+                    <select id="status-filter" class="control-select">
+                        <option value="">All Statuses</option>
+                        <option value="new">New</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="resolved">Resolved</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Reported By</th>
+                            <th>Serial No.</th>
+                            <th>Subject</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Reported At</th>
+                            <th>Admin Notes</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="issue-data-table">
+                        <tr><td colspan="9" class="empty-state">Loading issues...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p id="issue-tracking-message" class="message-area"></p>
+        </section>
+    </main>
+
+    <div id="issue-detail-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>Issue Details <span id="modal-issue-id"></span></h3>
+            <form id="issue-update-form">
+                <div class="form-group">
+                    <label>Reported By:</label>
+                    <span id="modal-reported-by"></span> (<span id="modal-serial-no"></span>)
+                </div>
+                <div class="form-group">
+                    <label>Subject:</label>
+                    <span id="modal-subject"></span>
+                </div>
+                <div class="form-group">
+                    <label>Description:</label>
+                    <p id="modal-description"></p>
+                </div>
+                <div class="form-group">
+                    <label for="modal-status">Status:</label>
+                    <select id="modal-status" name="status">
+                        <option value="new">New</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="resolved">Resolved</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="modal-admin-notes">Admin Notes:</label>
+                    <textarea id="modal-admin-notes" name="admin_notes" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Issue</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="admin-footer">
+        <div class="container">
+            <p>&copy; 2025 Arca Admin. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/issue_tracker.js"></script>
+</body>
+</html> -->

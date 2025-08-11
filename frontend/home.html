@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - InstantBackup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --dark-blue: #1e40af;
+            --light-blue: #eff6ff;
+            --white: #ffffff;
+            --gray-light: #f3f4f6;
+            --gray-medium: #9ca3af;
+            --gray-dark: #4b5563;
+            --sidebar-width: 250px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: var(--gray-light);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--white);
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+            transition: transform 0.3s;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .sidebar-logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .sidebar-nav {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--gray-dark);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        .nav-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        .main-header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 90;
+        }
+
+        .user-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info {
+            font-weight: 500;
+            color: var(--gray-dark);
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--primary-blue);
+            color: var(--primary-blue);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--light-blue);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--dark-blue);
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .section-title {
+            margin-bottom: 20px;
+            color: var(--gray-dark);
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* Overview Section */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .storage-card {
+            grid-column: span 2;
+        }
+
+        .storage-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .storage-bar {
+            height: 10px;
+            background-color: var(--gray-light);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .storage-progress {
+            height: 100%;
+            background-color: var(--primary-blue);
+            width: 65%;
+        }
+
+        .status-card {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .status-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .status-active {
+            background-color: #d1fae5;
+            color: #10b981;
+        }
+
+        .status-text h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .status-text p {
+            font-size: 14px;
+            color: var(--gray-medium);
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* Upload Section */
+        .upload-area {
+            border: 2px dashed var(--gray-medium);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-blue);
+            background-color: var(--light-blue);
+        }
+
+        .upload-area i {
+            font-size: 40px;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+
+        .upload-progress {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: var(--gray-light);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-blue);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--gray-medium);
+        }
+
+        /* File List Section */
+        .file-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-bar {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px 10px 35px;
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-medium);
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .control-select, .control-input {
+            padding: 10px 15px;
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            background-color: var(--white);
+        }
+
+        .files-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .files-table th {
+            text-align: left;
+            padding: 12px 15px;
+            background-color: var(--gray-light);
+            color: var(--gray-dark);
+            font-weight: 500;
+        }
+
+        .files-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .file-action {
+            color: var(--primary-blue);
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+            .storage-card {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .quick-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">InstantBackup</div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-item active">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="dashboard.html" class="nav-item">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <span>Upload Files</span>
+            </a>
+            <a href="#backups" class="nav-item">
+                <i class="fas fa-history"></i>
+                <span>Backup History</span>
+            </a>
+            <a href="#restore" class="nav-item">
+                <i class="fas fa-download"></i>
+                <span>Restore Files</span>
+            </a>
+            <a href="#settings" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header class="main-header">
+            <button id="menu-toggle" class="btn btn-outline">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="user-nav">
+                <span id="user-display" class="user-info">Welcome, User!</span>
+                <a href="profile.html" class="btn btn-outline">Profile</a>
+                <button id="logout-button" class="btn btn-outline">Logout</button>
+            </nav>
+        </header>
+
+        <div class="dashboard-content">
+            <!-- Dashboard Overview Section -->
+            <section id="dashboard" class="dashboard-section">
+                <h1 class="section-title">Dashboard Overview</h1>
+                
+                <div class="overview-grid">
+                    <!-- Storage Usage Card -->
+                    <div class="card storage-card">
+                        <h2>Storage Usage</h2>
+                        <div class="storage-info">
+                            <span>15.2 GB of 50 GB used</span>
+                            <span>30%</span>
+                        </div>
+                        <div class="storage-bar">
+                            <div class="storage-progress" style="width: 30%;"></div>
+                        </div>
+                        <div class="quick-actions">
+                            <button class="btn btn-primary">Upgrade Plan</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Backup Status Card -->
+                    <div class="card status-card">
+                        <div class="status-icon status-active">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="status-text">
+                            <h3>Last Backup: 2 hours ago</h3>
+                            <p>All files secured • Status: <strong>Active</strong></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Actions Card -->
+                    <div class="card">
+                        <h2>Quick Actions</h2>
+                        <div class="quick-actions">
+                            <button class="btn btn-primary">Backup Now</button>
+                            <button class="btn btn-primary">One-Click Restore</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Activity -->
+                <div class="card">
+                    <h2>Recent Activity</h2>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <i class="fas fa-check-circle text-success"></i>
+                            <span>Backup completed - Today, 10:42 AM</span>
+                        </div>
+                        <div class="activity-item">
+                            <i class="fas fa-sync-alt text-info"></i>
+                            <span>Scheduled sync started - Today, 9:00 AM</span>
+                        </div>
+                        <div class="activity-item">
+                            <i class="fas fa-upload text-primary"></i>
+                            <span>3 files uploaded - Yesterday, 5:30 PM</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- File Upload Section -->
+            <section id="upload" class="upload-section" style="display: none;">
+                <h1 class="section-title">Upload Files</h1>
+                <div class="card">
+                    <div class="upload-area" id="upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Drag & Drop files here</h3>
+                        <p>or</p>
+                        <button class="btn btn-primary">Select Files</button>
+                        <input type="file" id="file-input" style="display: none;" multiple>
+                    </div>
+                    
+                    <div class="upload-progress" id="upload-progress">
+                        <h4>Uploading: <span id="current-file">project-document.pdf</span></h4>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%;"></div>
+                        </div>
+                        <div class="progress-info">
+                            <span>45% complete</span>
+                            <span>2.1 MB/s • About 10 seconds remaining</span>
+                        </div>
+                    </div>
+                    
+                    <div class="upload-status">
+                        <h4>Upload Status</h4>
+                        <div class="status-success">
+                            <i class="fas fa-check-circle"></i>
+                            <span>3 files uploaded successfully</span>
+                        </div>
+                        <div class="status-error">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>project-document.pdf - Upload failed (network error)</span>
+                            <button class="btn btn-outline">Retry</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Backup History Section -->
+            <section id="backups" class="backup-section" style="display: none;">
+                <h1 class="section-title">Backup History</h1>
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="files-table">
+                            <thead>
+                                <tr>
+                                    <th>Date/Time</th>
+                                    <th>Name</th>
+                                    <th>Size</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Today, 10:42 AM</td>
+                                    <td>Full Device Backup</td>
+                                    <td>15.2 GB</td>
+                                    <td><span class="status-badge completed">Completed</span></td>
+                                    <td>
+                                        <button class="btn btn-outline">Browse</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Yesterday, 9:00 AM</td>
+                                    <td>Photos Backup</td>
+                                    <td>8.7 GB</td>
+                                    <td><span class="status-badge completed">Completed</span></td>
+                                    <td>
+                                        <button class="btn btn-outline">Browse</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>July 10, 8:30 AM</td>
+                                    <td>Documents Backup</td>
+                                    <td>3.2 GB</td>
+                                    <td><span class="status-badge completed">Completed</span></td>
+                                    <td>
+                                        <button class="btn btn-outline">Browse</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Restore Section -->
+            <section id="restore" class="restore-section" style="display: none;">
+                <h1 class="section-title">Restore Files</h1>
+                <div class="card">
+                    <div class="restore-options">
+                        <h3>Select Backup Version</h3>
+                        <select class="control-select">
+                            <option>Full Device Backup - Today, 10:42 AM</option>
+                            <option>Photos Backup - Yesterday, 9:00 AM</option>
+                            <option>Documents Backup - July 10, 8:30 AM</option>
+                        </select>
+                        
+                        <div class="file-browser">
+                            <!-- File browser UI would go here -->
+                            <p>Browse and select files to restore</p>
+                        </div>
+                        
+                        <div class="restore-actions">
+                            <button class="btn btn-primary">Restore All</button>
+                            <button class="btn btn-outline">Select Files to Restore</button>
+                        </div>
+                        
+                        <div class="restore-progress" style="display: none;">
+                            <h4>Restoring Files</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 30%;"></div>
+                            </div>
+                            <div class="progress-info">
+                                <span>3 of 10 files restored</span>
+                                <span>1.5 MB/s • About 2 minutes remaining</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Settings Section -->
+            <section id="settings" class="settings-section" style="display: none;">
+                <h1 class="section-title">Settings</h1>
+                <div class="card">
+                    <h2>Account Information</h2>
+                    <form>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" value="John Doe" class="control-input">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" value="john@example.com" class="control-input" readonly>
+                        </div>
+                        <button class="btn btn-outline">Change Password</button>
+                    </form>
+                    
+                    <h2>Backup Preferences</h2>
+                    <form>
+                        <div class="form-group">
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                                <span>Automatic Hourly Sync</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Sync Frequency</label>
+                            <select class="control-select">
+                                <option>Hourly</option>
+                                <option>Daily</option>
+                                <option>Weekly</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                                <span>Wi-Fi Only</span>
+                            </label>
+                        </div>
+                    </form>
+                    
+                    <h2>Device Management</h2>
+                    <div class="device-list">
+                        <div class="device-item">
+                            <span>iPhone 13 Pro (This device)</span>
+                            <button class="btn btn-outline">Unlink</button>
+                        </div>
+                        <div class="device-item">
+                            <span>MacBook Pro 2020</span>
+                            <button class="btn btn-outline">Unlink</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Simple navigation between sections
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Hide all sections
+                document.querySelectorAll('section').forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                // Show selected section
+                const sectionId = this.getAttribute('href');
+                document.querySelector(sectionId).style.display = 'block';
+                
+                // Update active nav item
+                document.querySelectorAll('.nav-item').forEach(navItem => {
+                    navItem.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+        
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+        
+        // File upload handling
+        document.getElementById('upload-area').addEventListener('click', function() {
+            document.getElementById('file-input').click();
+        });
+        
+        document.getElementById('file-input').addEventListener('change', function() {
+            if (this.files.length > 0) {
+                document.getElementById('upload-progress').style.display = 'block';
+                // Simulate upload progress
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 5;
+                    document.querySelector('.progress-fill').style.width = progress + '%';
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                    }
+                }, 300);
+            }
+        });
+    </script>
+</body>
+</html>

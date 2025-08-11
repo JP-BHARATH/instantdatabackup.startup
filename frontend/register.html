@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - InstantBackup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --dark-blue: #1e40af;
+            --light-blue: #eff6ff;
+            --white: #ffffff;
+            --glass-white: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Left Side - Form Container */
+        .form-container {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 380px;
+            background: var(--glass-white);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        .logo-small {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .auth-card h2 {
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--white);
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            font-size: 14px;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--white);
+            color: var(--primary-blue);
+        }
+
+        .social-divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: var(--white);
+            font-size: 14px;
+        }
+
+        .social-divider::before,
+        .social-divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .social-divider span {
+            padding: 0 10px;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .auth-footer {
+            text-align: center;
+            color: var(--white);
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        .auth-footer a {
+            color: var(--white);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        /* Right Side - Image Panel */
+        .image-panel {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .image-container {
+            width: 100%;
+            max-width: 500px;
+            height: 500px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 16px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .image-panel {
+                display: none;
+            }
+            .form-container {
+                padding: 1rem;
+            }
+            .auth-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Left Side - Form Container -->
+    <div class="form-container">
+        <div class="auth-card">
+            <div class="logo-small">OiTeq</div>
+            <h2>Create Your Account</h2>
+            
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-username">Username</label>
+                    <input type="text" id="register-username" name="username" placeholder="Choose username" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" placeholder="Create password" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-confirm-password">Confirm Password</label>
+                    <input type="password" id="register-confirm-password" placeholder="Repeat password" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+                
+                <div class="social-divider">
+                    <span>OR</span>
+                </div>
+                
+                <div class="social-buttons">
+                    <button type="button" class="social-btn">
+                        <i class="fab fa-google"></i>
+                    </button>
+                    <button type="button" class="social-btn">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button type="button" class="social-btn">
+                        <i class="fab fa-apple"></i>
+                    </button>
+                </div>
+                
+                <p class="auth-footer">
+                    Already have an account? <a href="login.html">Log In</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Right Side - Image Panel -->
+    <!-- <div class="image-panel">
+        <div class="image-container" style="background-image: url('your-image-url-here.jpg')"></div>
+    </div> -->
+
+    <script src="js/app.js"></script>
+</body>
+</html>

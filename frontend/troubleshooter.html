@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Connection Troubleshooter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --dark-blue: #1e40af;
+            --light-blue: #eff6ff;
+            --white: #ffffff;
+            --glass-white: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --danger-red: #ef4444;
+            --success-green: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            background: var(--white);
+            color: var(--primary-blue);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 18px;
+            max-width: 800px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--glass-white);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            color: var(--white);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+        }
+
+        .card h2 i {
+            background: rgba(255, 255, 255, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .issue-list {
+            list-style: none;
+        }
+
+        .issue-item {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--white);
+            display: flex;
+            gap: 15px;
+        }
+
+        .issue-item:last-child {
+            border-bottom: none;
+        }
+
+        .status-indicator {
+            min-width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .status-danger {
+            background: var(--danger-red);
+        }
+
+        .status-warning {
+            background: #f59e0b;
+        }
+
+        .status-success {
+            background: var(--success-green);
+        }
+
+        .issue-content {
+            flex: 1;
+        }
+
+        .issue-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        .issue-description {
+            font-size: 15px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .solution-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--success-green);
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .solution-title {
+            color: var(--success-green);
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: monospace;
+            color: #f0f0f0;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+
+        .test-area {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            border-radius: 16px;
+            margin-top: 40px;
+        }
+
+        .test-area h2 {
+            color: var(--white);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .test-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .test-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tester {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .tester h3 {
+            color: var(--white);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--white);
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            font-size: 15px;
+        }
+
+        .btn {
+            background: var(--white);
+            color: var(--primary-blue);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background: var(--light-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .result-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+            min-height: 150px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            color: var(--white);
+        }
+
+        .status-code {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .status-2xx {
+            background: var(--success-green);
+        }
+
+        .status-4xx, .status-5xx {
+            background: var(--danger-red);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: rgba(255,255,255,0.7);
+            margin-top: 30px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-plug"></i>
+                <div>API Connection Troubleshooter</div>
+            </div>
+            <div>
+                <h1>Frontend-Backend Communication Issues</h1>
+                <p class="subtitle">Your frontend isn't sending requests to the backend? This diagnostic tool will help you identify and solve common connection issues.</p>
+            </div>
+        </header>
+
+        <div class="card-grid">
+            <div class="card">
+                <h2><i class="fas fa-code"></i> Code Issues</h2>
+                <ul class="issue-list">
+                    <li class="issue-item">
+                        <div class="status-indicator status-danger"><i class="fas fa-times"></i></div>
+                        <div class="issue-content">
+                            <div class="issue-title">Missing Event Listeners</div>
+                            <div class="issue-description">Event handlers not properly attached to form elements</div>
+                            <div class="solution-box">
+                                <div class="solution-title"><i class="fas fa-lightbulb"></i> Solution</div>
+                                <p>Ensure all event listeners are properly registered in the DOMContentLoaded event:</p>
+                                <div class="code-block">document.addEventListener('DOMContentLoaded', () => {
+    // Form submission handlers here
+    document.getElementById('myForm').addEventListener('submit', handleSubmit);
+});</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="issue-item">
+                        <div class="status-indicator status-danger"><i class="fas fa-times"></i></div>
+                        <div class="issue-content">
+                            <div class="issue-title">Incorrect API Endpoints</div>
+                            <div class="issue-description">URLs in fetch requests don't match backend routes</div>
+                            <div class="solution-box">
+                                <div class="solution-title"><i class="fas fa-lightbulb"></i> Solution</div>
+                                <p>Verify your API endpoints match your backend implementation:</p>
+                                <div class="code-block">// Example of correct endpoint configuration
+const BASE_URL = 'https://your-backend-domain.com/api';
+
+async function fetchData() {
+    const response = await fetch(`${BASE_URL}/profile`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    // ...
+}</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-shield-alt"></i> Security Issues</h2>
+                <ul class="issue-list">
+                    <li class="issue-item">
+                        <div class="status-indicator status-danger"><i class="fas fa-times"></i></div>
+                        <div class="issue-content">
+                            <div class="issue-title">CORS Policy Blocking</div>
+                            <div class="issue-description">Cross-Origin Resource Sharing policy prevents requests</div>
+                            <div class="solution-box">
+                                <div class="solution-title"><i class="fas fa-lightbulb"></i> Solution</div>
+                                <p>Configure your backend to include proper CORS headers:</p>
+                                <div class="code-block">// Example for Express.js
+const cors = require('cors');
+app.use(cors({
+    origin: 'https://your-frontend-domain.com',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="issue-item">
+                        <div class="status-indicator status-warning"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="issue-content">
+                            <div class="issue-title">Authentication Problems</div>
+                            <div class="issue-description">Missing or invalid authorization tokens</div>
+                            <div class="solution-box">
+                                <div class="solution-title"><i class="fas fa-lightbulb"></i> Solution</div>
+                                <p>Verify token storage and attach to requests:</p>
+                                <div class="code-block">// Properly handle token storage
+        const token = localStorage.getItem('authToken');
+
+// Include in fetch requests
+fetch('/api/protected-route', {
+    headers: {
+        'Authorization': `Bearer ${token}`
+    }
+});</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-network-wired"></i> Network Issues</h2>
+                <ul class="issue-list">
+                    <li class="issue-item">
+                        <div class="status-indicator status-warning"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="issue-content">
+                            <div class="issue-title">Backend Not Running</div>
+                            <div class="issue-description">The backend server might not be active</div>
+                            <div class="solution-box">
+                                <div class="solution-title"><i class="fas fa-lightbulb"></i> Solution</div>
+                                <p>Check your backend server status and logs:</p>
+                                <div class="code-block"># For Node.js applications
+$ node server.js
+
+# Check running processes
+$ netstat -tuln | grep :3000  # Replace with your port</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="issue-item">
+                        <div class="status-indicator status-warning"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="issue-content">
+                            <div class="issue-title">Firewall/Port Restrictions</div>
+                            <div class="issue-description">Network blocking communication between frontend and backend</div>
+                            <div class="solution-box">
+                                <div class="solution-title"><i class="fas fa-lightbulb"></i> Solution</div>
+                                <p>Verify network connectivity and port accessibility:</p>
+                                <div class="code-block"># Test backend accessibility
+$ curl -I http://localhost:3000/api/health
+
+# Check firewall settings
+$ sudo ufw status  # Linux firewall
+$ netsh advfirewall show allprofiles  # Windows</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-area">
+            <h2><i class="fas fa-vial"></i> API Connection Tester</h2>
+            <div class="test-container">
+                <div class="tester">
+                    <h3><i class="fas fa-paper-plane"></i> Test API Endpoint</h3>
+                    <div class="form-group">
+                        <label for="api-url">API Endpoint URL:</label>
+                        <input type="text" id="api-url" class="form-control" placeholder="https://your-api.com/endpoint" value="/api/profile">
+                    </div>
+                    <div class="form-group">
+                        <label for="api-method">HTTP Method:</label>
+                        <select id="api-method" class="form-control">
+                            <option value="GET">GET</option>
+                            <option value="POST">POST</option>
+                            <option value="PUT">PUT</option>
+                            <option value="DELETE">DELETE</option>
+                        </select>
+                    </div>
+                    <button id="test-api-btn" class="btn btn-block">
+                        <i class="fas fa-bolt"></i> Test Connection
+                    </button>
+                    <div class="result-box" id="api-result">
+                        // Results will appear here
+                    </div>
+                </div>
+                <div class="tester">
+                    <h3><i class="fas fa-key"></i> Test Authentication</h3>
+                    <div class="form-group">
+                        <label for="auth-token">Authentication Token:</label>
+                        <textarea id="auth-token" class="form-control" rows="4" placeholder="Paste your JWT token here"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="protected-url">Protected Endpoint:</label>
+                        <input type="text" id="protected-url" class="form-control" placeholder="/api/protected" value="/api/profile">
+                    </div>
+                    <button id="test-auth-btn" class="btn btn-block">
+                        <i class="fas fa-user-shield"></i> Test Authentication
+                    </button>
+                    <div class="result-box" id="auth-result">
+                        // Authentication results will appear here
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>API Troubleshooter &copy; 2023 | Use Chrome Developer Tools (F12) to inspect network requests</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Test API Connection
+            document.getElementById('test-api-btn').addEventListener('click', async () => {
+                const url = document.getElementById('api-url').value;
+                const method = document.getElementById('api-method').value;
+                const resultBox = document.getElementById('api-result');
+                
+                if (!url) {
+                    resultBox.innerHTML = "⚠️ Please enter a URL to test";
+                    return;
+                }
+                
+                resultBox.innerHTML = "⌛ Testing connection...";
+                
+                try {
+                    const startTime = Date.now();
+                    const response = await fetch(url, {
+                        method: method,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    const endTime = Date.now();
+                    const duration = endTime - startTime;
+                    
+                    let resultHtml = `<span class="status-code status-${Math.floor(response.status/100)}xx">${response.status} ${response.statusText}</span>`;
+                    resultHtml += `<div>⏱️ Response time: ${duration}ms</div>`;
+                    
+                    if (!response.ok) {
+                        resultHtml += `<div>❌ Error: ${response.statusText}</div>`;
+                    } else {
+                        const data = await response.json();
+                        resultHtml += `<div>✅ Success! Received response:</div>`;
+                        resultHtml += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                    }
+                    
+                    resultBox.innerHTML = resultHtml;
+                } catch (error) {
+                    resultBox.innerHTML = `❌ Network error: ${error.message}`;
+                }
+            });
+            
+            // Test Authentication
+            document.getElementById('test-auth-btn').addEventListener('click', async () => {
+                const url = document.getElementById('protected-url').value;
+                const token = document.getElementById('auth-token').value.trim();
+                const resultBox = document.getElementById('auth-result');
+                
+                if (!url) {
+                    resultBox.innerHTML = "⚠️ Please enter a protected endpoint URL";
+                    return;
+                }
+                
+                if (!token) {
+                    resultBox.innerHTML = "⚠️ Please enter an authentication token";
+                    return;
+                }
+                
+                resultBox.innerHTML = "⌛ Testing authentication...";
+                
+                try {
+                    const response = await fetch(url, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    let resultHtml = `<span class="status-code status-${Math.floor(response.status/100)}xx">${response.status} ${response.statusText}</span>`;
+                    
+                    if (response.status === 401) {
+                        resultHtml += `<div>🔒 Unauthorized: Invalid or missing credentials</div>`;
+                    } else if (response.status === 403) {
+                        resultHtml += `<div>🚫 Forbidden: Valid credentials but insufficient permissions</div>`;
+                    } else if (response.ok) {
+                        resultHtml += `<div>🔓 Authenticated successfully!</div>`;
+                        const data = await response.json();
+                        resultHtml += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                    } else {
+                        resultHtml += `<div>⚠️ Unexpected response: ${response.statusText}</div>`;
+                    }
+                    
+                    resultBox.innerHTML = resultHtml;
+                } catch (error) {
+                    resultBox.innerHTML = `❌ Network error: ${error.message}`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,394 @@
+/* Basic Admin Login Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #2c3e50; /* Dark blue-gray background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 25px;
+    color: #2c3e50;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    width: calc(100% - 20px); /* Account for padding */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.message-area {
+    margin-top: -10px;
+    margin-bottom: 15px;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.message-area.error {
+    background-color: #ffe0e0;
+    color: #cc0000;
+    border: 1px solid #ffaaaa;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+/* admin_panel/public/css/admin_styles.css */
+
+/* Basic Admin Login Styles (from above) */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #2c3e50; /* Dark blue-gray background */
+    display: flex; /* For login page centering */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+}
+
+/* Specific styles for admin dashboard pages */
+body.admin-dashboard-page {
+    display: block; /* Override flex for dashboard layout */
+    background-color: #f4f7f6; /* Lighter background for dashboard */
+}
+
+/* Containers */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+.admin-header {
+    background-color: #34495e; /* Slightly different dark header */
+    color: #fff;
+    padding: 15px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.admin-header h1 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+.admin-nav {
+    display: flex;
+    align-items: center;
+}
+.admin-nav .nav-item {
+    color: #aebacd; /* Lighter text for navigation */
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-right: 10px;
+}
+.admin-nav .nav-item:hover,
+.admin-nav .nav-item.active {
+    background-color: #2c3e50;
+    color: #ffffff;
+}
+
+/* Buttons (reusing .btn, .btn-primary) */
+.btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none; /* For button-like links */
+    display: inline-block; /* For button-like links */
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #28a745; /* Green for primary actions */
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #218838;
+    transform: translateY(-1px);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #f0f0f0; /* White/light gray text for outline buttons */
+    border: 1px solid #f0f0f0;
+}
+.btn-outline:hover {
+    background-color: #f0f0f0;
+    color: #333;
+    transform: translateY(-1px);
+}
+
+.btn-secondary { /* New style for secondary buttons like "View/Edit" */
+    background-color: #6c757d;
+    color: white;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-sm { /* Smaller buttons */
+    padding: 6px 10px;
+    font-size: 0.8em;
+}
+
+/* Main Content Area */
+.admin-content {
+    padding: 30px 20px;
+}
+
+.card {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.card h2 {
+    color: #34495e;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Tables */
+.table-responsive {
+    overflow-x: auto; /* Enable horizontal scroll on small screens */
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.data-table th,
+.data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9em;
+}
+
+.data-table th {
+    background-color: #ecf0f1; /* Light gray header */
+    color: #34495e;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f8f8f8;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 30px;
+    color: #777;
+    font-style: italic;
+}
+
+/* Form Groups and Inputs */
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="email"],
+.form-group select,
+.form-group textarea {
+    width: calc(100% - 22px); /* Adjust for padding + border */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+/* Message Areas */
+.message-area {
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+.message-area.error {
+    background-color: #ffe0e0;
+    color: #cc0000;
+    border: 1px solid #ffaaaa;
+}
+.message-area.success {
+    background-color: #e6ffe6;
+    color: #008000;
+    border: 1px solid #aaffaa;
+}
+
+/* Filters */
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+.filters .form-group {
+    margin-bottom: 0; /* Override default form-group margin */
+}
+.filters .control-select {
+    min-width: 150px;
+}
+.filters .control-input {
+    min-width: 120px;
+}
+
+/* Footer */
+.admin-footer {
+    background-color: #34495e;
+    color: #aebacd;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 0.85em;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+    margin-top: 30px;
+}
+
+/* Modals */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto; /* Center vertically and horizontally */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    width: 80%; /* Could be responsive */
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative; /* For close button positioning */
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    color: #34495e;
+}
+.modal-content .form-group {
+    margin-bottom: 15px;
+}
+.modal-content .form-group span,
+.modal-content .form-group p {
+    font-weight: normal;
+    color: #666;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+/* Small adjustments for inputs/selects within modal */
+.modal-content input[type="text"],
+.modal-content input[type="email"],
+.modal-content textarea,
+.modal-content select {
+    width: 100%; /* Full width within modal */
+    box-sizing: border-box; /* Include padding and border in width */
+}

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OiTeq | Secure Cloud Storage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --dark-blue: #1e40af;
+            --light-blue: #eff6ff;
+            --white: #ffffff;
+            --glass-white: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --danger-red: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            min-height: 100vh;
+            color: var(--white);
+        }
+
+        /* Header Styles */
+        .main-header {
+            background: rgba(0,0,0,0.2);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-outline {
+            background: var(--glass-white);
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--glass-border);
+            color: var(--white);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .btn-primary {
+            background-color: var(--white);
+            color: var(--primary-blue);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--light-blue);
+        }
+
+        .btn-large {
+            padding: 14px 28px;
+            font-size: 18px;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 120px 30px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glass Card Styles */
+        .glass-card {
+            background: var(--glass-white);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        /* Features Section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+        }
+
+        .section-title p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            padding: 30px;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        /* Security Section */
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .security-item {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .security-item i {
+            font-size: 48px;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        /* Platforms Section */
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .platform-card {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .platform-card i {
+            font-size: 48px;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        .main-footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255,255,255,0.7);
+            margin-top: 60px;
+            font-size: 14px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+
+        .footer-links h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .section-title h2 {
+                font-size: 28px;
+            }
+            
+            .nav-links {
+                display: none; /* Consider adding a mobile menu */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">OiTeq</div>
+        <nav class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#security">Security</a>
+            <a href="#enterprise">Enterprise</a>
+            <a href="login.html" class="btn btn-outline">Login</a>
+            <a href="register.html" class="btn btn-outline">Get Started</a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero glass-card">
+            <h1>Never Lose Your Data Again</h1>
+            <p>Blockchain-secured instant backup solution with one-click restoration. Your memories, documents, and data - protected across all devices.</p>
+            <div style="margin-top: 40px;">
+                <a href="register.html" class="btn btn-primary btn-large">Start Free Backup</a>
+                <a href="#" class="btn btn-outline btn-large" style="margin-left: 16px;">Watch Demo</a>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="glass-card">
+            <div class="section-title">
+                <h2>Powerful Features</h2>
+                <p>Everything you need for complete data protection and peace of mind</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <i class="fas fa-sync-alt feature-icon"></i>
+                    <h3>Auto Hourly Sync</h3>
+                    <p>Set it and forget it. Your data backs up automatically every hour with minimal battery drain.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-undo feature-icon"></i>
+                    <h3>One-Click Restore</h3>
+                    <p>Lost your device? Restore everything on a new device with just one click. It's that simple.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-search feature-icon"></i>
+                    <h3>Smart Search</h3>
+                    <p>Find any file instantly with our AI-powered search across all your backed-up data.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-bell feature-icon"></i>
+                    <h3>Sync Notifications</h3>
+                    <p>Stay informed with real-time notifications about backup status and completion.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-folder feature-icon"></i>
+                    <h3>Selective Backup</h3>
+                    <p>Choose specific folders and file types to backup. Full control over your data sync.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt feature-icon"></i>
+                    <h3>Multi-Device Access</h3>
+                    <p>Access your files from any device - mobile, web, or desktop. Your data follows you everywhere.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Section -->
+        <section id="security" class="glass-card">
+            <div class="section-title">
+                <h2>Bank-Level Security</h2>
+                <p>Your data is protected with military-grade encryption and blockchain technology</p>
+            </div>
+            <div class="security-grid">
+                <div class="security-item">
+                    <i class="fas fa-lock"></i>
+                    <h3>AES-256 Encryption</h3>
+                    <p>Your files are encrypted with the same standard used by banks and government agencies before leaving your device.</p>
+                </div>
+                <div class="security-item">
+                    <i class="fas fa-link"></i>
+                    <h3>Blockchain Integrity</h3>
+                    <p>Every file is verified with blockchain technology, ensuring your data hasn't been tampered with or corrupted.</p>
+                </div>
+                <div class="security-item">
+                    <i class="fas fa-eye-slash"></i>
+                    <h3>Zero-Knowledge</h3>
+                    <p>We can't see your data even if we wanted to. You hold the only keys to decrypt your information.</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 50px; color: rgba(255,255,255,0.7);">
+                <p>99.99% Uptime - 256-bit Encryption - GDPR Compliant</p>
+            </div>
+        </section>
+
+        <!-- Enterprise Section -->
+        <section id="enterprise" class="glass-card">
+            <h2>Ready for Enterprise-Grade Data Protection?</h2>
+            <p>Transform your organization's data management with blockchain-secured backup, collaborative workspaces, and comprehensive administrative control.</p>
+            <a href="#" class="btn btn-primary btn-large">Start Enterprise Trial</a>
+        </section>
+
+        <!-- Platforms Section -->
+        <section class="glass-card">
+            <div class="section-title">
+                <h2>One App, All Platforms</h2>
+                <p>Access your data anywhere, anytime. Complete feature parity across all platforms.</p>
+            </div>
+            <div class="platforms-grid">
+                <div class="platform-card">
+                    <i class="fab fa-android"></i>
+                    <h3>Android</h3>
+                    <p>Native Android app with full backup capabilities</p>
+                    <p style="color: var(--white); font-weight: 600; margin-top: 10px;">Available</p>
+                </div>
+                <div class="platform-card">
+                    <i class="fab fa-apple"></i>
+                    <h3>iOS</h3>
+                    <p>Seamless iPhone and iPad integration</p>
+                    <p style="color: var(--white); font-weight: 600; margin-top: 10px;">Available</p>
+                </div>
+                <div class="platform-card">
+                    <i class="fas fa-globe"></i>
+                    <h3>Web</h3>
+                    <p>Access your data from any web browser</p>
+                    <p style="color: var(--white); font-weight: 600; margin-top: 10px;">Available</p>
+                </div>
+                <div class="platform-card">
+                    <i class="fas fa-desktop"></i>
+                    <h3>Desktop</h3>
+                    <p>Windows, macOS, and Linux support</p>
+                    <p style="color: var(--white); font-weight: 600; margin-top: 10px;">Coming Soon</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="#" class="btn btn-primary btn-large">Download for Android</a>
+                <a href="#" class="btn btn-primary btn-large" style="margin-left: 16px;">Download for iOS</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <div class="footer-logo">OiTeq</div>
+                <p>Secure, instant, and reliable data backup with blockchain technology.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Product</h3>
+                <ul>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Security</a></li>
+                    <li><a href="#">Platforms</a></li>
+                    <li><a href="#">Pricing</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Instant Data Backup. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

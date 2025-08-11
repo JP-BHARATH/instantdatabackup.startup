@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Profile - InstantBackup</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .debug-info { background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Profile Test Page</h1>
+    
+    <div class="debug-info">
+        <h3>Debug Information:</h3>
+        <div id="auth-status">Checking authentication...</div>
+        <div id="token-info">Token info...</div>
+        <div id="api-response">API response...</div>
+    </div>
+
+    <button onclick="testAuth()">Test Authentication</button>
+    <button onclick="testProfileAPI()">Test Profile API</button>
+    <button onclick="clearStorage()">Clear Storage</button>
+
+    <script src="js/app.js"></script>
+    <script>
+        function updateDebugInfo() {
+            const authToken = localStorage.getItem('authToken');
+            const username = localStorage.getItem('username');
+            
+            document.getElementById('auth-status').innerHTML = 
+                `Auth Token: ${authToken ? 'Present' : 'Missing'}`;
+            document.getElementById('token-info').innerHTML = 
+                `Username: ${username || 'Not set'}`;
+        }
+
+        async function testAuth() {
+            console.log('Testing authentication...');
+            updateDebugInfo();
+            
+            if (!localStorage.getItem('authToken')) {
+                document.getElementById('api-response').innerHTML = 
+                    '<span class="error">No auth token found</span>';
+                return;
+            }
+
+            try {
+                const response = await makeAuthenticatedRequest('/api/profile');
+                if (response) {
+                    const data = await response.json();
+                    document.getElementById('api-response').innerHTML = 
+                        `<span class="success">API Success: ${JSON.stringify(data, null, 2)}</span>`;
+                } else {
+                    document.getElementById('api-response').innerHTML = 
+                        '<span class="error">API request failed</span>';
+                }
+            } catch (error) {
+                document.getElementById('api-response').innerHTML = 
+                    `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+
+        async function testProfileAPI() {
+            console.log('Testing profile API directly...');
+            
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                document.getElementById('api-response').innerHTML = 
+                    '<span class="error">No token available</span>';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/profile', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                console.log('Direct API response:', response);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('api-response').innerHTML = 
+                        `<span class="success">Direct API Success: ${JSON.stringify(data, null, 2)}</span>`;
+                } else {
+                    const errorText = await response.text();
+                    document.getElementById('api-response').innerHTML = 
+                        `<span class="error">Direct API Error: ${response.status} - ${errorText}</span>`;
+                }
+            } catch (error) {
+                document.getElementById('api-response').innerHTML = 
+                    `<span class="error">Direct API Exception: ${error.message}</span>`;
+            }
+        }
+
+        function clearStorage() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('username');
+            updateDebugInfo();
+            document.getElementById('api-response').innerHTML = 
+                '<span class="success">Storage cleared</span>';
+        }
+
+        // Update debug info on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDebugInfo();
+        });
+    </script>
+</body>
+</html> 

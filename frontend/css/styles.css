@@ -1,0 +1,852 @@
+/* General Body & Root Styles */
+body {
+    font-family: 'Inter', sans-serif; /* Using Inter as per instructions */
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5; /* Light background for the whole app */
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header & Footer */
+.main-header {
+    background-color: #2c3e50; /* Dark navy */
+    color: #fff;
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-header .logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #fff;
+}
+
+.main-header .main-nav a,
+.main-header .user-nav a,
+.main-header .user-nav .user-info {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 500;
+}
+
+.main-header .main-nav a:hover,
+.main-header .user-nav a:hover {
+    color: #3498db; /* Primary blue accent */
+}
+
+.main-footer {
+    background-color: #333;
+    color: #bbb;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.main-footer .footer-nav a {
+    color: #bbb;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.main-footer .footer-nav a:hover {
+    color: #fff;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #3498db; /* Primary blue */
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+}
+
+.btn-outline:hover {
+    background-color: #fff;
+    color: #2c3e50; /* Dark navy */
+}
+
+.btn-large {
+    padding: 15px 30px;
+    font-size: 1.1em;
+}
+
+.btn-full {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.btn-secondary {
+    background-color: #95a5a6; /* Grey */
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #7f8c8d; /* Darker grey */
+}
+
+/* Social Buttons */
+.btn-social {
+    /* Existing styles remain for borders, colors, etc. */
+    border: 1px solid #ddd;
+    color: #555; /* Default icon color */
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+    /* New styles for icon-only, square/circular shape */
+    display: flex; /* Keep flex to center the icon */
+    align-items: center;
+    justify-content: center;
+    width: 50px;   /* Fixed width for square icon button */
+    height: 50px;  /* Fixed height for square icon button */
+    padding: 0; /* Remove padding as width/height define size */
+    border-radius: 50%; /* Make them perfectly circular */
+    font-size: 1.5em; /* Increase icon size slightly for prominence */
+    box-sizing: border-box; /* Include padding/border in width/height */
+}
+
+.btn-social i {
+    /* Remove previous margin-right as text is gone */
+    margin-right: 0;
+}
+
+/* Hover/Active states for social buttons */
+.btn-google { border-color: #ea4335; color: #ea4335; }
+.btn-google:hover { background-color: #ea4335; color: #fff; }
+.btn-facebook { border-color: #1877f2; color: #1877f2; }
+.btn-facebook:hover { background-color: #1877f2; color: #fff; }
+.btn-apple { border-color: #000; color: #000; }
+.btn-apple:hover { background-color: #000; color: #fff; }
+
+.btn-google { border-color: #ea4335; color: #ea4335; }
+.btn-google:hover { background-color: #ea4335; color: #fff; }
+.btn-facebook { border-color: #1877f2; color: #1877f2; }
+.btn-facebook:hover { background-color: #1877f2; color: #fff; }
+.btn-apple { border-color: #000; color: #000; }
+.btn-apple:hover { background-color: #000; color: #fff; }
+
+
+/* Welcome Page Specifics */
+.welcome-page {
+    background: linear-gradient(135deg, #3498db, #2c3e50); /* Blue gradient */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-section {
+    padding: 80px 0;
+    color: #fff;
+    text-align: center;
+    flex-grow: 1; /* Makes it take up available space */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-section .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+.hero-content h1 {
+    font-size: 3.5em;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.3em;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.features-section {
+    background-color: #fff;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.features-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    color: #2c3e50;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.feature-card {
+    background-color: #f8f9fa;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 3em;
+    color: #3498db;
+    margin-bottom: 15px;
+}
+
+.feature-card h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.cta-section {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.cta-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+/* Auth Pages (Login, Register, Forgot, Reset) */
+.auth-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+}
+
+.auth-container {
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-card {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.auth-card .logo-small {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.auth-card h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.auth-instructions {
+    margin-bottom: 25px;
+    color: #666;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: calc(100% - 20px); /* Account for padding */
+    padding: 12px 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    box-sizing: border-box; /* Include padding in width */
+    transition: border-color 0.2s ease;
+}
+
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+.text-right {
+    text-align: right;
+    margin-top: -10px; /* Pull it up slightly */
+    margin-bottom: 15px;
+}
+
+.link-text {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.link-text:hover {
+    text-decoration: underline;
+}
+
+.message-area {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    display: none; /* Hidden by default, shown by JS */
+}
+
+.message-area.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    display: block;
+}
+
+.message-area.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    display: block;
+}
+
+.social-login-divider {
+    margin: 30px 0;
+    position: relative;
+    text-align: center;
+    color: #aaa;
+}
+.social-login-divider::before,
+.social-login-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background-color: #eee;
+}
+.social-login-divider::before { left: 0; }
+.social-login-divider::after { right: 0; }
+.social-login-divider span {
+    background-color: #fff;
+    padding: 0 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.social-login-buttons {
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* STACK BUTTONS VERTICALLY */
+    gap: 10px; /* Space between the buttons */
+    margin-top: 20px; /* Add some space above them */
+}
+
+.auth-switch {
+    margin-top: 25px;
+    font-size: 0.9em;
+    color: #777;
+}
+
+/* Dashboard Page Specifics */
+.dashboard-page {
+    background-color: #f0f2f5;
+}
+
+.dashboard-content {
+    padding: 40px 0;
+}
+
+.dashboard-content h1 {
+    font-size: 2.8em;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+.card h2 {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.upload-section .file-input-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.upload-section .file-name-display {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    color: #555;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.upload-section .btn-primary {
+    margin-top: 20px;
+    width: auto; /* Override btn-full */
+}
+
+.list-controls {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.files-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.files-table th,
+.files-table td {
+    border: 1px solid #eee;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.files-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    color: #555;
+}
+
+.files-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.files-table tbody tr:hover {
+    background-color: #eef;
+}
+
+.files-table .actions-cell button {
+    margin-right: 8px;
+    padding: 8px 12px;
+    font-size: 0.9em;
+    border-radius: 5px;
+}
+
+.files-table .actions-cell .btn-primary {
+    background-color: #28a745; /* Green for download */
+}
+.files-table .actions-cell .btn-primary:hover {
+    background-color: #218838;
+}
+
+.files-table .actions-cell .btn-danger {
+    background-color: #dc3545; /* Red for delete */
+    color: #fff;
+}
+.files-table .actions-cell .btn-danger:hover {
+    background-color: #c82333;
+}
+
+.files-table .empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #777;
+    font-style: italic;
+}
+
+/* --- File Management Controls (Search & Filters) --- */
+.file-controls {
+    display: flex;
+    flex-wrap: wrap; /* Allow controls to wrap on smaller screens */
+    gap: 15px; /* Space between control groups */
+    margin-bottom: 25px;
+    align-items: center; /* Vertically align items in the row */
+    justify-content: space-between; /* Push search to left, filters to right */
+}
+
+/* Search Bar */
+.search-bar {
+    position: relative;
+    flex-grow: 1; /* Allow search bar to take available space */
+    min-width: 250px; /* Minimum width for search bar */
+    margin-bottom: 0; /* Override default form-group margin */
+}
+
+.search-bar .control-input {
+    width: 100%;
+    padding-right: 40px; /* Space for the icon */
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #95a5a6;
+    pointer-events: none; /* Make icon not interfere with input clicks */
+}
+
+/* Filters Container */
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Space between filter elements */
+    align-items: center;
+}
+
+/* Control Inputs (Search, Date) & Selects */
+.control-input,
+.control-select {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    color: #555;
+    background-color: #fff;
+    box-sizing: border-box; /* Include padding/border in width/height */
+    transition: border-color 0.2s ease;
+    height: 42px; /* NEW: Explicitly set a fixed height for consistent sizing */
+    line-height: 20px; /* NEW: Set a consistent line-height to control text vertical alignment */
+}
+
+.control-input:focus,
+.control-select:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+.control-select {
+    appearance: none; /* Remove default browser arrow */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2395a5a6%22%20d%3D%22M287%2C146.2L146.2%2C287c-4.7%2C4.7-12.3%2C4.7-17%2C0l-4.7-4.7L5.4%2C146.2c-4.7-4.7-4.7-12.3%2C0-17l14.7-14.7c4.7-4.7%2C12.3-4.7%2C17%2C0L146.2%2C240.2l111.4-111.4c4.7-4.7%2C12.3-4.7%2C17%2C0L287%2C129.2c4.7%2C4.7%2C4.7%2C12.3%2C0%2C17z%22%2F%3E%3C%2Fsvg%3E'); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    padding-right: 30px; /* Space for custom arrow */
+    /* NEW: Ensure vertical alignment for text within the select */
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.date-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 0; /* Override default form-group margin */
+}
+/* --- Modal Styles (for File Preview) --- */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    max-width: 90%;
+    max-height: 90vh; /* Limit height to viewport */
+    overflow-y: auto; /* Enable scrolling within modal content */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-content .close-button {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.modal-content .close-button:hover,
+.modal-content .close-button:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    font-size: 1.8em;
+}
+
+.preview-area {
+    width: 100%;
+    max-width: 800px; /* Max width for preview content */
+    text-align: center;
+    margin-bottom: 20px;
+    flex-grow: 1; /* Allow preview area to take available space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Hide overflow for media */
+}
+
+.preview-area img,
+.preview-area video,
+.preview-area audio,
+.preview-area iframe {
+    max-width: 100%;
+    max-height: 60vh; /* Limit height of media */
+    height: auto;
+    display: block; /* Remove extra space below images/videos */
+    margin: 0 auto; /* Center media */
+    border-radius: 5px;
+}
+
+.preview-area pre {
+    white-space: pre-wrap; /* Wrap long lines */
+    word-wrap: break-word; /* Break words for long lines */
+    text-align: left;
+    background-color: #eee;
+    padding: 15px;
+    border-radius: 5px;
+    max-height: 60vh;
+    overflow-y: auto;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+.modal-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.loading-spinner {
+    font-size: 1.2em;
+    color: #555;
+}
+
+/* Optional: Add styles for file type icons */
+.files-table i.fas {
+    margin-right: 8px;
+    color: #666;
+}
+
+.files-table i.fa-file-image { color: #4CAF50; } /* Green for image */
+.files-table i.fa-file-video { color: #007bff; } /* Blue for video */
+.files-table i.fa-file-audio { color: #f44336; } /* Red for audio */
+.files-table i.fa-file-pdf { color: #DC3545; } /* Bootstrap Danger Red for PDF */
+.files-table i.fa-file-word { color: #28A745; } /* Bootstrap Success Green for Word */
+.files-table i.fa-file-excel { color: #17A2B8; } /* Bootstrap Info Blue for Excel */
+.files-table i.fa-file-powerpoint { color: #FFC107; } /* Bootstrap Warning Yellow for PPT */
+.files-table i.fa-file-archive { color: #6C757D; } /* Bootstrap Secondary Gray for Archive */
+.files-table i.fa-file-alt { color: #555; } /* Darker gray for generic text */
+/* Control Buttons (like refresh) */
+.control-button {
+    /* ... existing styles ... */
+    height: 42px; /* NEW: Match the height of inputs/selects for perfect alignment */
+    display: flex; /* NEW: Use flex to ensure icon is centered vertically */
+    align-items: center;
+    justify-content: center;
+}
+
+.control-button .fas {
+    margin-right: 0; /* Ensure no margin for icon-only buttons */
+}
+
+/* Screen Reader Only Class */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+
+/* Adjustments for Table Actions - add Preview button placeholder */
+.files-table .actions-cell {
+    white-space: nowrap; /* Prevent buttons from wrapping if possible */
+}
+.files-table .actions-cell button {
+    margin-right: 5px; /* Adjust spacing between action buttons */
+    padding: 8px 10px;
+    font-size: 0.85em; /* Slightly smaller for compactness */
+}
+
+/* New button style for Preview */
+.files-table .actions-cell .btn-info {
+    background-color: #17a2b8; /* Info blue */
+    color: #fff;
+}
+.files-table .actions-cell .btn-info:hover {
+    background-color: #138496;
+}
+
+/* Responsive adjustments for file controls */
+@media (max-width: 768px) {
+    .file-controls {
+        flex-direction: column;
+        align-items: stretch; /* Stretch items to fill width */
+    }
+    .search-bar {
+        min-width: unset; /* Remove min-width on small screens */
+        width: 100%;
+    }
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .filters .form-group,
+    .filters .control-select,
+    .filters .control-input {
+        width: 100%; /* Make filter inputs full width */
+    }
+    .date-filters {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .control-button {
+        width: 100%; /* Make refresh button full width */
+    }
+}
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .main-header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .main-header .main-nav {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .main-header .main-nav a,
+    .main-header .user-nav a {
+        margin: 0;
+    }
+    .main-header .main-nav .btn,
+    .main-header .user-nav .btn {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5em;
+    }
+    .hero-content p {
+        font-size: 1.1em;
+    }
+    .hero-section .container {
+        flex-direction: column;
+    }
+    .hero-image {
+        margin-top: 30px;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-card {
+        padding: 30px 20px;
+    }
+
+    .files-table th,
+    .files-table td {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+    .table-responsive {
+        overflow-x: auto; /* Enables horizontal scrolling for tables on small screens */
+    }
+}
