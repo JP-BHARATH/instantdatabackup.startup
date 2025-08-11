@@ -6,7 +6,7 @@ const __dirname = dirname(__filename);
 import 'dotenv/config'; // This should always be at the very top to load .env variables
 import express from 'express';
 import connectDB from './config/db.js';
-import User from './models/User.js'; // Ensure this path is correct
+import User from './models/User.js'; // Ensure this path is correc
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 // import auth from './middleware/auth.js'; // Original auth middleware, using custom one below
